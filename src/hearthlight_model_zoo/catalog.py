@@ -1,0 +1,45 @@
+from __future__ import annotations
+
+from collections import defaultdict
+
+from .artifacts import ARTIFACT_MANIFESTS, ArtifactSpec
+
+
+def list_supported_stages() -> list[str]:
+    return sorted({spec.stage for spec in ARTIFACT_MANIFESTS.values()})
+
+
+def list_stage_models(stage: str) -> list[ArtifactSpec]:
+    normalized = stage.strip().lower()
+    return sorted(
+        (spec for spec in ARTIFACT_MANIFESTS.values() if spec.stage == normalized),
+        key=lambda spec: spec.model_key,
+    )
+
+
+def build_stage_catalog() -> dict[str, list[dict[str, object]]]:
+    catalog = defaultdict(list)
+    for spec in ARTIFACT_MANIFESTS.values():
+        catalog[spec.stage].append(
+            {
+                "model_key": spec.model_key,
+                "family": spec.family,
+                "stage": spec.stage,
+                "backends": list(spec.backends),
+                "classes": list(spec.classes),
+                "license": spec.license_name,
+                "description": spec.description,
+                "upstream_url": spec.upstream_url,
+                "cache_filename": spec.cache_filename,
+            }
+        )
+    return {
+        stage: sorted(entries, key=lambda entry: str(entry["model_key"]))
+        for stage, entries in catalog.items()
+    }
+
+
+def list_model_keys(stage: str | None = None) -> list[str]:
+    if stage is None:
+        return sorted(ARTIFACT_MANIFESTS)
+    return [spec.model_key for spec in list_stage_models(stage)]

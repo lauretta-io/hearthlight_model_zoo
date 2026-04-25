@@ -77,7 +77,6 @@ class ByteTrackTracker:
 
 def get_tracker(name: str):
     normalized = str(name).strip().lower()
-    if normalized in {"bytetrack", "builtin_bytetrack", "cmtrack"}:
+    if normalized in {"bytetrack", "bytetrack-s", "builtin_bytetrack", "cmtrack"}:
         return ByteTrackTracker()
     raise ValueError(f"unsupported tracker {name}")
-
