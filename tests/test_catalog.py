@@ -8,6 +8,8 @@ from hearthlight_model_zoo.catalog import (
     list_model_keys,
     list_stage_models,
     list_supported_stages,
+    load_master_catalog,
+    write_master_catalog,
 )
 
 
@@ -31,6 +33,21 @@ class CatalogTests(unittest.TestCase):
     def test_list_model_keys_supports_stage_filter(self):
         self.assertIn("transreid-market1501", list_model_keys("reid"))
         self.assertNotIn("bytetrack", list_model_keys("reid"))
+
+    def test_master_catalog_contains_tracker_registrations(self):
+        catalog = load_master_catalog()
+        trackers = catalog["models"]["tracker"]
+        self.assertIn("builtin_botsort", trackers)
+        self.assertIn("builtin_ocsort", trackers)
+        self.assertIn("strongsort", catalog["stage_options"]["tracker"])
+
+    def test_master_catalog_round_trips_to_disk(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            target = Path(temp_dir) / "master_catalog.json"
+            catalog = {"version": 99, "models": {}, "stage_options": {"tracker": ["bytetrack"]}}
+            written = write_master_catalog(target, catalog)
+            self.assertEqual(written, target)
+            self.assertEqual(load_master_catalog(target), catalog)
 
     def test_ensure_artifact_without_download_returns_cache_path(self):
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -1,0 +1,334 @@
+{
+  "models": {
+    "anomaly_stage_1": {
+      "heuristic_presence_stage_1": {
+        "adapter": "heuristic_presence_stage_1",
+        "artifact_ref": "heuristic-presence",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "cooldown_seconds": 60,
+          "eval_interval": 16,
+          "min_track_count": 1,
+          "quiet_period_seconds": 30
+        },
+        "stage": "anomaly_stage_1"
+      }
+    },
+    "detector": {
+      "builtin_yolox_s_cpu": {
+        "adapter": "yolox_detector",
+        "artifact_ref": "yolox-s",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "backend": "torch",
+          "device": "cpu",
+          "precision": "fp32"
+        },
+        "stage": "detector"
+      },
+      "builtin_yolox_s_gpu": {
+        "adapter": "yolox_detector",
+        "artifact_ref": "yolox-s",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "fallback_model_key": "builtin_yolox_s_cpu",
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.detectors"
+        },
+        "requires_gpu": true,
+        "resource_profile": {
+          "gpu_memory_mb": 2048
+        },
+        "runtime": {
+          "backend": "torch",
+          "device": "cuda:0",
+          "precision": "fp16"
+        },
+        "stage": "detector"
+      }
+    },
+    "reid": {
+      "builtin_transreid_person_hybrid_bag": {
+        "adapter": "transreid_person_hybrid_bag",
+        "artifact_ref": "transreid-market1501",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.reid"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "bag_strategy": "HybridBagHeuristic",
+          "feature_extractor_model": "transreid-market1501",
+          "person_strategy": "TransReID"
+        },
+        "stage": "reid"
+      }
+    },
+    "tracker": {
+      "builtin_botsort": {
+        "adapter": "botsort_tracker",
+        "artifact_ref": "botsort",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.trackers"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "tracker_name": "botsort"
+        },
+        "stage": "tracker"
+      },
+      "builtin_bytetrack": {
+        "adapter": "bytetrack_tracker",
+        "artifact_ref": "bytetrack",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.trackers"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "tracker_name": "bytetrack"
+        },
+        "stage": "tracker"
+      },
+      "builtin_bytetrack_balanced": {
+        "adapter": "bytetrack_tracker",
+        "artifact_ref": "bytetrack-balanced",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.trackers"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "tracker_name": "bytetrack-balanced"
+        },
+        "stage": "tracker"
+      },
+      "builtin_bytetrack_fast": {
+        "adapter": "bytetrack_tracker",
+        "artifact_ref": "bytetrack-s",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.trackers"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "tracker_name": "bytetrack-s"
+        },
+        "stage": "tracker"
+      },
+      "builtin_cmtrack": {
+        "adapter": "cmtrack_tracker",
+        "artifact_ref": "cmtrack",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.trackers"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "tracker_name": "cmtrack"
+        },
+        "stage": "tracker"
+      },
+      "builtin_ocsort": {
+        "adapter": "ocsort_tracker",
+        "artifact_ref": "ocsort",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.trackers"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "tracker_name": "ocsort"
+        },
+        "stage": "tracker"
+      },
+      "builtin_strongsort": {
+        "adapter": "strongsort_tracker",
+        "artifact_ref": "strongsort",
+        "capabilities": {
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.trackers"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "tracker_name": "strongsort"
+        },
+        "stage": "tracker"
+      }
+    }
+  },
+  "stage_options": {
+    "detector": [
+      "yolox-nano",
+      "yolox-tiny",
+      "yolox-s",
+      "yolox-m"
+    ],
+    "feature_extractor": [
+      "transreid-market1501",
+      "transreid-msmt17"
+    ],
+    "pose": [
+      "rtmo-s",
+      "rtmo-m"
+    ],
+    "tracker": [
+      "bytetrack",
+      "bytetrack-s",
+      "bytetrack-balanced",
+      "botsort",
+      "ocsort",
+      "strongsort",
+      "cmtrack"
+    ]
+  },
+  "version": 1
+}

@@ -36,6 +36,12 @@ class RuntimeAdapterTests(unittest.TestCase):
         self.assertEqual(outputs.shape, (1, 5))
         self.assertEqual(outputs[0, 4], 1)
 
+    def test_tracker_variants_are_available(self):
+        for tracker_name in ("botsort", "ocsort", "strongsort", "cmtrack", "bytetrack-balanced"):
+            tracker = get_tracker(tracker_name)
+            outputs = tracker.update(np.array([[0, 0, 10, 10, 0.9]], dtype=np.float32))
+            self.assertEqual(outputs.shape, (1, 5))
+
     def test_reid_bundle_search_and_updates(self):
         cfg = SimpleNamespace(
             reid={

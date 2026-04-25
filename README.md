@@ -15,10 +15,15 @@ This package exposes a stable import surface for:
 The package keeps only code plus artifact manifests. Checkpoints are expected to be
 resolved into `~/.cache/hearthlight_model_zoo` at runtime.
 
+Shared runtime registrations live in `src/hearthlight_model_zoo/master_catalog.json`.
+That file is intended to be the editable source of truth for shared detector, tracker,
+reid, and anomaly stage options. Downstream repos can scan it and merge in local-only
+registrations or overrides.
+
 Current public catalog:
 
 - detector: `yolox-nano`, `yolox-tiny`, `yolox-s`, `yolox-m`
-- tracker: `bytetrack`, `bytetrack-s`
+- tracker: `bytetrack`, `bytetrack-s`, `bytetrack-balanced`, `botsort`, `ocsort`, `strongsort`, `cmtrack`
 - reid / feature extractor: `transreid-market1501`, `transreid-msmt17`
 - pose: `rtmo-s`, `rtmo-m`
 - anomaly stage 1 heuristic: `heuristic-presence`

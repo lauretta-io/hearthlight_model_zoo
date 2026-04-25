@@ -24,3 +24,6 @@ full = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+hearthlight_model_zoo = ["master_catalog.json"]
