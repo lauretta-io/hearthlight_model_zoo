@@ -41,6 +41,14 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("builtin_ocsort", trackers)
         self.assertIn("strongsort", catalog["stage_options"]["tracker"])
 
+    def test_master_catalog_detector_registration_includes_raw_classes(self):
+        catalog = load_master_catalog()
+        detector = catalog["models"]["detector"]["builtin_yolox_s_cpu"]
+        self.assertEqual(
+            detector["capabilities"]["classes"],
+            ["person", "backpack", "handbag", "suitcase"],
+        )
+
     def test_master_catalog_round_trips_to_disk(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             target = Path(temp_dir) / "master_catalog.json"

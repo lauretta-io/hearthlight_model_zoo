@@ -5,6 +5,12 @@
         "adapter": "heuristic_presence_stage_1",
         "artifact_ref": "heuristic-presence",
         "capabilities": {
+          "classes": [
+            "person",
+            "backpack",
+            "handbag",
+            "suitcase"
+          ],
           "source_kinds": [
             "camera_url",
             "video_upload",
@@ -36,6 +42,12 @@
         "adapter": "yolox_detector",
         "artifact_ref": "yolox-s",
         "capabilities": {
+          "classes": [
+            "person",
+            "backpack",
+            "handbag",
+            "suitcase"
+          ],
           "source_kinds": [
             "camera_url",
             "video_upload",

@@ -32,6 +32,7 @@ Common cases:
 - changing a shared runtime alias such as `tracker_name`
 - updating the stage option lists that downstream launchers or registry scanners should show
 - changing shared healthcheck, capability, or resource metadata
+- adding detector class metadata that downstream apps should expose in model pickers or model-library views
 
 If a downstream repo should be able to discover the option without maintaining its own duplicate entry, it belongs in the master catalog.
 
@@ -57,6 +58,8 @@ Most new model additions should update both files:
 
 - add the model key and artifact metadata to `artifacts.py`
 - add the shared registration and stage option entry to `master_catalog.json`
+
+For detectors, keep the catalog registration honest about the raw class surface. If the artifact can emit classes beyond Hearthlight's normalized `PERSON` and `BAG` mapping, include those raw detector classes in `capabilities.classes` so downstream apps can display them.
 
 If a new tracker also needs a new alias or compatibility behavior, update the matching runtime adapter in `src/hearthlight_model_zoo/trackers.py`.
 

@@ -75,6 +75,7 @@ The package currently exposes these public entrypoints:
 The runtime behavior is compatibility-first:
 
 - detector outputs are normalized to Hearthlight task names such as `PERSON` and `BAG`
+- detector catalog entries also keep the raw detector classes, such as `person`, `backpack`, `handbag`, and `suitcase`, so downstream apps can describe the full class surface clearly
 - `GUN` is intentionally not supported in the commodity detector lane
 - pose and anomaly helpers degrade cleanly when optional runtime dependencies or cached artifacts are unavailable
 
@@ -96,6 +97,7 @@ Think of it as the package-shipped source of truth for:
 
 - shared runtime registrations
 - stage-specific model options
+- raw model metadata such as detector classes
 - default metadata that downstream apps can read without scraping docs
 
 Downstream repos can load it directly through the package helper:
@@ -119,6 +121,8 @@ The intended pattern is:
 5. keep local keys authoritative when a downstream repo needs custom behavior
 
 This is the pattern used by `hearthlight` itself: shared catalog data comes from this package, while repo-local YAML or runtime config can extend it for product-specific behavior.
+
+Downstream apps decide which catalog entries are surfaced as defaults or overrides in their own UI. The model-zoo package stays neutral and ships the shared registrations plus metadata those apps need to make that distinction.
 
 ## Contributing
 
