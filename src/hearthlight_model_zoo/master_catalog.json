@@ -1,6 +1,128 @@
 {
   "models": {
     "anomaly_stage_1": {
+      "siglip_stage_1_cpu": {
+        "adapter": "siglip_stage_1",
+        "artifact_ref": "siglip-stage-1-cpu",
+        "capabilities": {
+          "classes": [
+            "person",
+            "backpack",
+            "handbag",
+            "suitcase"
+          ],
+          "prompt_support": true,
+          "runtime_targets": [
+            "cpu"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "default_for_backend": "cpu",
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "backend": "torch",
+          "device": "cpu",
+          "model_size_tier": "small",
+          "precision": "fp32"
+        },
+        "stage": "anomaly_stage_1"
+      },
+      "siglip_stage_1_cuda": {
+        "adapter": "siglip_stage_1",
+        "artifact_ref": "siglip-stage-1-cuda",
+        "capabilities": {
+          "classes": [
+            "person",
+            "backpack",
+            "handbag",
+            "suitcase"
+          ],
+          "prompt_support": true,
+          "runtime_targets": [
+            "cuda"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "default_for_backend": "cuda",
+        "fallback_model_key": "siglip_stage_1_cpu",
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": true,
+        "resource_profile": {
+          "gpu_memory_mb": 1024
+        },
+        "runtime": {
+          "backend": "torch",
+          "device": "cuda:0",
+          "model_size_tier": "small",
+          "precision": "fp16"
+        },
+        "stage": "anomaly_stage_1"
+      },
+      "siglip_stage_1_mlx": {
+        "adapter": "siglip_stage_1",
+        "artifact_ref": "siglip-stage-1-mlx",
+        "capabilities": {
+          "classes": [
+            "person",
+            "backpack",
+            "handbag",
+            "suitcase"
+          ],
+          "prompt_support": true,
+          "runtime_targets": [
+            "mlx"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ],
+          "tasks": [
+            "PERSON",
+            "BAG"
+          ]
+        },
+        "default_for_backend": "mlx",
+        "fallback_model_key": "siglip_stage_1_cpu",
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "backend": "mlx",
+          "device": "mlx",
+          "model_size_tier": "small",
+          "precision": "fp16"
+        },
+        "stage": "anomaly_stage_1"
+      },
       "heuristic_presence_stage_1": {
         "adapter": "heuristic_presence_stage_1",
         "artifact_ref": "heuristic-presence",
@@ -35,6 +157,164 @@
           "quiet_period_seconds": 30
         },
         "stage": "anomaly_stage_1"
+      }
+    },
+    "anomaly_stage_2": {
+      "smolvlm_stage_2_cpu": {
+        "adapter": "smolvlm_stage_2",
+        "artifact_ref": "smolvlm-stage-2-cpu",
+        "capabilities": {
+          "prompt_support": true,
+          "runtime_targets": [
+            "cpu"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ]
+        },
+        "default_for_backend": "cpu",
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "backend": "torch",
+          "device": "cpu",
+          "model_size_tier": "small",
+          "precision": "fp32",
+          "prompt_mode": "vision-language"
+        },
+        "stage": "anomaly_stage_2"
+      },
+      "smolvlm_stage_2_cuda": {
+        "adapter": "smolvlm_stage_2",
+        "artifact_ref": "smolvlm-stage-2-cuda",
+        "capabilities": {
+          "prompt_support": true,
+          "runtime_targets": [
+            "cuda"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ]
+        },
+        "default_for_backend": "cuda",
+        "fallback_model_key": "smolvlm_stage_2_cpu",
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": true,
+        "resource_profile": {
+          "gpu_memory_mb": 4096
+        },
+        "runtime": {
+          "backend": "torch",
+          "device": "cuda:0",
+          "model_size_tier": "small",
+          "precision": "fp16",
+          "prompt_mode": "vision-language"
+        },
+        "stage": "anomaly_stage_2"
+      },
+      "smolvlm_stage_2_mlx": {
+        "adapter": "smolvlm_stage_2",
+        "artifact_ref": "smolvlm-stage-2-mlx",
+        "capabilities": {
+          "prompt_support": true,
+          "runtime_targets": [
+            "mlx"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ]
+        },
+        "default_for_backend": "mlx",
+        "fallback_model_key": "smolvlm_stage_2_cpu",
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 2
+        },
+        "runtime": {
+          "backend": "mlx",
+          "device": "mlx",
+          "model_size_tier": "small",
+          "precision": "fp16",
+          "prompt_mode": "vision-language"
+        },
+        "stage": "anomaly_stage_2"
+      },
+      "prompt_rules_stage_2": {
+        "adapter": "prompt_rules_stage_2",
+        "artifact_ref": "smolvlm-stage-2-cpu",
+        "capabilities": {
+          "prompt_support": true,
+          "runtime_targets": [
+            "cpu",
+            "cuda",
+            "mlx"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "backend": "python",
+          "device": "cpu",
+          "model_size_tier": "small",
+          "prompt_mode": "rule-based"
+        },
+        "stage": "anomaly_stage_2"
+      },
+      "passthrough_stage_2": {
+        "adapter": "passthrough_stage_2",
+        "artifact_ref": "smolvlm-stage-2-cpu",
+        "capabilities": {
+          "runtime_targets": [
+            "cpu",
+            "cuda",
+            "mlx"
+          ],
+          "source_kinds": [
+            "camera_url",
+            "video_upload",
+            "webcam"
+          ]
+        },
+        "healthcheck": {
+          "import_path": "hearthlight_model_zoo.anomaly_detectors"
+        },
+        "requires_gpu": false,
+        "resource_profile": {
+          "cpu_cores": 1
+        },
+        "runtime": {
+          "backend": "python",
+          "device": "cpu",
+          "model_size_tier": "small",
+          "prompt_mode": "passthrough"
+        },
+        "stage": "anomaly_stage_2"
       }
     },
     "detector": {
@@ -318,6 +598,17 @@
     }
   },
   "stage_options": {
+    "anomaly_stage_1": [
+      "siglip-stage-1-cpu",
+      "siglip-stage-1-cuda",
+      "siglip-stage-1-mlx",
+      "heuristic-presence"
+    ],
+    "anomaly_stage_2": [
+      "smolvlm-stage-2-cpu",
+      "smolvlm-stage-2-cuda",
+      "smolvlm-stage-2-mlx"
+    ],
     "detector": [
       "yolox-nano",
       "yolox-tiny",

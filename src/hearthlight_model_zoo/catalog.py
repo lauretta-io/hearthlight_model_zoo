@@ -31,11 +31,14 @@ def build_stage_catalog() -> dict[str, list[dict[str, object]]]:
                 "family": spec.family,
                 "stage": spec.stage,
                 "backends": list(spec.backends),
+                "runtime_targets": list(spec.runtime_targets),
                 "classes": list(spec.classes),
                 "license": spec.license_name,
                 "description": spec.description,
                 "upstream_url": spec.upstream_url,
                 "cache_filename": spec.cache_filename,
+                "size_tier": spec.size_tier,
+                "prompt_support": spec.prompt_support,
             }
         )
     return {
